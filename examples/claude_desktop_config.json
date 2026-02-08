@@ -1,0 +1,9 @@
+{
+  "$schema": "https://modelcontextprotocol.io/schema/mcp-config.json",
+  "mcpServers": {
+    "bazel": {
+      "command": "/usr/local/bin/bazel-mcp-server",
+      "description": "Bazel build system integration via MCP"
+    }
+  }
+}
