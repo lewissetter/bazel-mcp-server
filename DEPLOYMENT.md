@@ -65,36 +65,11 @@ The `bazel-mcp-server` project is now complete and ready to be moved out of this
 # Initialize: No (we already have a repo)
 ```
 
-### 2. Update References
-
-Replace `yourusername` with your actual GitHub username in:
-- [ ] `go.mod` (line 1)
-- [ ] `README.md` (badges and links)
-- [ ] `.goreleaser.yml` (release configuration)
-- [ ] `.golangci.yml` (import paths)
-- [ ] All markdown files with example commands
-
-Replace placeholder emails:
-- [ ] `SECURITY.md` - Update security contact
-- [ ] `CODE_OF_CONDUCT.md` - Update conduct contact
-
-### 3. Move and Push
+### 2. Push to GitHub
 
 ```bash
-# Move the directory out of go-sdk
-mv /Users/lewis.setter_cn/Code/go-sdk/bazel-mcp-server ~/Projects/
-
-# Navigate to new location
-cd ~/Projects/bazel-mcp-server
-
-# Update go.mod to remove local replace directive
-# Change this line:
-# replace github.com/modelcontextprotocol/go-sdk => ../
-# To use published version:
-# (Remove the replace directive after publishing)
-
 # Add GitHub remote
-git remote add origin https://github.com/yourusername/bazel-mcp-server.git
+git remote add origin https://github.com/lewissetter/bazel-mcp-server.git
 
 # Push to GitHub
 git push -u origin main
@@ -104,19 +79,19 @@ git tag -a v0.1.0 -m "Release v0.1.0: Initial release of Bazel MCP Server"
 git push origin v0.1.0
 ```
 
-### 4. Verify GitHub Actions
+### 3. Verify GitHub Actions
 
 After pushing:
 1. Check that CI workflow runs successfully
 2. Verify release workflow creates binaries (after pushing tag)
 3. Confirm GitHub Pages is set up (if desired for docs)
 
-### 5. Update go.mod for Public Use
+### 4. Update go.mod for Public Use
 
 Once the MCP SDK is properly accessible, update `go.mod`:
 
 ```go
-module github.com/yourusername/bazel-mcp-server
+module github.com/lewissetter/bazel-mcp-server
 
 go 1.21
 
@@ -167,13 +142,7 @@ All 7 Bazel commands are implemented and tested:
 
 ## 🐛 Known Limitations
 
-1. **Local Replace Directive**: `go.mod` currently uses a local replace for the MCP SDK. This needs to be updated to use the published version once you decide how to distribute it.
-
-2. **Placeholder Usernames**: All references to `yourusername` need to be updated with actual GitHub username.
-
-3. **Email Placeholders**: Security and conduct contact emails need to be updated.
-
-These are intentional placeholders and easy to fix before publishing.
+1. **Local Replace Directive**: `go.mod` currently uses a local replace for the MCP SDK. This needs to be updated to use the published version once the SDK is publicly available.
 
 ## 💡 Future Enhancement Ideas
 

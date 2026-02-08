@@ -58,7 +58,7 @@ changelog:
 
 release:
   github:
-    owner: yourusername
+    owner: lewissetter
     name: bazel-mcp-server
   draft: false
   prerelease: auto
@@ -76,9 +76,9 @@ release:
     
     ```bash
     # macOS or Linux
-    curl -L https://github.com/yourusername/bazel-mcp-server/releases/download/{{.Tag}}/bazel-mcp-server_{{.Version}}_{{.Os}}_{{.Arch}}.tar.gz | tar xz
+    curl -L https://github.com/lewissetter/bazel-mcp-server/releases/download/{{.Tag}}/bazel-mcp-server_{{.Version}}_{{.Os}}_{{.Arch}}.tar.gz | tar xz
     sudo mv bazel-mcp-server /usr/local/bin/
     
     # Or with Go
-    go install github.com/yourusername/bazel-mcp-server/cmd/bazel-mcp-server@{{.Tag}}
+    go install github.com/lewissetter/bazel-mcp-server/cmd/bazel-mcp-server@{{.Tag}}
     ```

@@ -1,7 +1,7 @@
 # Bazel MCP Server
 
-[![Go Reference](https://pkg.go.dev/badge/github.com/yourusername/bazel-mcp-server.svg)](https://pkg.go.dev/github.com/yourusername/bazel-mcp-server)
-[![Go Report Card](https://goreportcard.com/badge/github.com/yourusername/bazel-mcp-server)](https://goreportcard.com/report/github.com/yourusername/bazel-mcp-server)
+[![Go Reference](https://pkg.go.dev/badge/github.com/lewissetter/bazel-mcp-server.svg)](https://pkg.go.dev/github.com/lewissetter/bazel-mcp-server)
+[![Go Report Card](https://goreportcard.com/badge/github.com/lewissetter/bazel-mcp-server)](https://goreportcard.com/report/github.com/lewissetter/bazel-mcp-server)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 An [MCP (Model Context Protocol)](https://modelcontextprotocol.io/) server for interacting with the [Bazel](https://bazel.build/) build system. This server enables AI assistants and other MCP clients to build, test, query, and manage Bazel projects.
@@ -23,12 +23,12 @@ The server provides the following MCP tools:
 ### From Source
 
 ```bash
-go install github.com/yourusername/bazel-mcp-server/cmd/bazel-mcp-server@latest
+go install github.com/lewissetter/bazel-mcp-server/cmd/bazel-mcp-server@latest
 ```
 
 ### From Release
 
-Download the appropriate binary for your platform from the [releases page](https://github.com/yourusername/bazel-mcp-server/releases).
+Download the appropriate binary for your platform from the [releases page](https://github.com/lewissetter/bazel-mcp-server/releases).
 
 ## Usage
 
@@ -278,6 +278,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## Support
 
-- 🐛 [Report a bug](https://github.com/yourusername/bazel-mcp-server/issues/new?labels=bug)
-- ✨ [Request a feature](https://github.com/yourusername/bazel-mcp-server/issues/new?labels=enhancement)
-- 💬 [Ask a question](https://github.com/yourusername/bazel-mcp-server/discussions)
+- 🐛 [Report a bug](https://github.com/lewissetter/bazel-mcp-server/issues/new?labels=bug)
+- ✨ [Request a feature](https://github.com/lewissetter/bazel-mcp-server/issues/new?labels=enhancement)
+- 💬 [Ask a question](https://github.com/lewissetter/bazel-mcp-server/discussions)

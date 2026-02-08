@@ -10,7 +10,7 @@ We release patches for security vulnerabilities for the following versions:
 
 ## Reporting a Vulnerability
 
-If you discover a security vulnerability within Bazel MCP Server, please send an email to security@example.com (replace with your actual security contact). All security vulnerabilities will be promptly addressed.
+If you discover a security vulnerability within Bazel MCP Server, please send an email to lewissetter@gmail.com. All security vulnerabilities will be promptly addressed.
 
 **Please do not report security vulnerabilities through public GitHub issues.**
 

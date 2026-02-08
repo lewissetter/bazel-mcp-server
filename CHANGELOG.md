@@ -23,5 +23,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Cross-platform release binaries (Linux, macOS, Windows)
 - Complete documentation and examples
 
-[Unreleased]: https://github.com/yourusername/bazel-mcp-server/compare/v0.1.0...HEAD
-[0.1.0]: https://github.com/yourusername/bazel-mcp-server/releases/tag/v0.1.0
+[Unreleased]: https://github.com/lewissetter/bazel-mcp-server/compare/v0.1.0...HEAD
+[0.1.0]: https://github.com/lewissetter/bazel-mcp-server/releases/tag/v0.1.0

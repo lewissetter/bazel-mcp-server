@@ -113,7 +113,7 @@ Total: 25 files, ~2,150 lines of content
 
 1. **Install from source:**
    ```bash
-   go install github.com/yourusername/bazel-mcp-server/cmd/bazel-mcp-server@latest
+   go install github.com/lewissetter/bazel-mcp-server/cmd/bazel-mcp-server@latest
    ```
 
 2. **Configure Claude Desktop** (or other MCP client):
@@ -152,25 +152,17 @@ Total: 25 files, ~2,150 lines of content
 
 ## Publishing to GitHub
 
-The project is ready to be pushed to GitHub. Steps:
+The project is ready to be pushed to GitHub:
 
-1. **Create a new GitHub repository** (e.g., `yourusername/bazel-mcp-server`)
+1. **Create a new GitHub repository** named `bazel-mcp-server`
 
-2. **Update the module path** in these files (replace `yourusername`):
-   - `go.mod`
-   - `README.md`
-   - `.goreleaser.yml`
-   - `.golangci.yml`
-   - All documentation files
-
-3. **Add remote and push:**
+2. **Add remote and push:**
    ```bash
-   cd bazel-mcp-server
-   git remote add origin https://github.com/yourusername/bazel-mcp-server.git
+   git remote add origin https://github.com/lewissetter/bazel-mcp-server.git
    git push -u origin main
    ```
 
-4. **Create first release:**
+3. **Create first release:**
    ```bash
    git tag -a v0.1.0 -m "Release v0.1.0"
    git push origin v0.1.0
@@ -192,13 +184,6 @@ The GitHub Actions workflow will automatically:
 - **Docker**: Container support
 
 ## Next Steps
-
-### Immediate
-1. Update all instances of `yourusername` with actual GitHub username
-2. Update security contact email in SECURITY.md
-3. Update conduct contact email in CODE_OF_CONDUCT.md
-4. Push to GitHub
-5. Create v0.1.0 release
 
 ### Future Enhancements
 - [ ] Add more Bazel commands (coverage, mobile-install, etc.)

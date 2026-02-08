@@ -1,4 +1,4 @@
-module github.com/yourusername/bazel-mcp-server
+module github.com/lewissetter/bazel-mcp-server
 
 go 1.24.0
 
