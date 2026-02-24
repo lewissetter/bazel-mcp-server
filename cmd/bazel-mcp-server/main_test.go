@@ -155,7 +155,9 @@ func TestCleanArgs(t *testing.T) {
 	}
 	// We expect an error because bazel isn't in a valid workspace, but that's OK for this test
 	// We're just testing the argument handling
-	_ = result
+	if result == nil {
+		t.Error("expected non-nil result")
+	}
 }
 
 // TestInfoArgs tests that InfoArgs work correctly
@@ -168,7 +170,48 @@ func TestInfoArgs(t *testing.T) {
 	}
 	// We expect an error because bazel isn't in a valid workspace, but that's OK for this test
 	// We're just testing the argument handling
-	_ = result
+	if result == nil {
+		t.Error("expected non-nil result")
+	}
+}
+
+// TestModArgsValidation tests that ModArgs validation works correctly
+func TestModArgsValidation(t *testing.T) {
+	// Test empty subcommand returns error
+	args := ModArgs{Subcommand: ""}
+	result, _, err := bazelMod(context.Background(), &mcp.CallToolRequest{}, args)
+	if err != nil {
+		t.Fatalf("unexpected error from handler: %v", err)
+	}
+	if !result.IsError {
+		t.Error("expected error result for empty subcommand")
+	}
+
+	// Test invalid subcommand returns error
+	args = ModArgs{Subcommand: "invalid_command"}
+	result, _, err = bazelMod(context.Background(), &mcp.CallToolRequest{}, args)
+	if err != nil {
+		t.Fatalf("unexpected error from handler: %v", err)
+	}
+	if !result.IsError {
+		t.Error("expected error result for invalid subcommand")
+	}
+
+	// Valid arguments
+	args = ModArgs{Subcommand: "graph"}
+	result, _, err = bazelMod(context.Background(), &mcp.CallToolRequest{}, args)
+	if err != nil {
+		t.Fatalf("unexpected error from handler: %v", err)
+	}
+	if result != nil && len(result.Content) > 0 {
+		text := result.Content[0].(*mcp.TextContent).Text
+		if text == "Error: subcommand is required (graph, show_repo, show_extension, dump_repo_mapping)" {
+			t.Error("validation should have passed for valid subcommand")
+		}
+		if text == "Error: invalid subcommand 'graph'. Valid options: graph, show_repo, show_extension, dump_repo_mapping" {
+			t.Error("validation should have passed for 'graph' subcommand")
+		}
+	}
 }
 
 // TestJSONSerialization tests that all argument types can be properly serialized
@@ -184,6 +227,7 @@ func TestJSONSerialization(t *testing.T) {
 		{"QueryArgs", QueryArgs{Expression: "deps(//...)", Options: []string{"--output=label"}}},
 		{"AqueryArgs", AqueryArgs{Expression: "deps(//...)", Options: []string{"--output=text"}}},
 		{"InfoArgs", InfoArgs{Keys: []string{"bazel-bin", "bazel-genfiles"}}},
+		{"ModArgs", ModArgs{Subcommand: "graph", Args: []string{}, Options: []string{}}},
 	}
 
 	for _, tt := range tests {
