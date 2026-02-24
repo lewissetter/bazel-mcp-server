@@ -355,7 +355,11 @@ func bazelMod(ctx context.Context, req *mcp.CallToolRequest, args ModArgs) (*mcp
 // executeBazel executes a bazel command and returns its output
 func executeBazel(ctx context.Context, args []string) (string, error) {
 	cmd := exec.CommandContext(ctx, "bazel", args...)
-	cmd.Dir, _ = os.Getwd()
+	workDir, err := os.Getwd()
+	if err != nil {
+		return "", fmt.Errorf("failed to get working directory: %w", err)
+	}
+	cmd.Dir = workDir
 
 	output, err := cmd.CombinedOutput()
 	outputStr := strings.TrimSpace(string(output))
