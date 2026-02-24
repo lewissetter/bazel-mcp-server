@@ -17,6 +17,7 @@ The server provides the following MCP tools:
 - **bazel_query** - Query the dependency graph
 - **bazel_aquery** - Query the action graph
 - **bazel_info** - Display Bazel server runtime info
+- **bazel_mod** - Manage Bazel modules (bzlmod)
 
 ## Installation
 
@@ -196,6 +197,47 @@ Display runtime info about the Bazel server.
 }
 ```
 
+### bazel_mod
+
+Manage Bazel modules (bzlmod) - query module graph, show repositories, and inspect extensions.
+
+**Arguments:**
+- `subcommand` (required): Mod subcommand to run (`graph`, `show_repo`, `show_extension`, `dump_repo_mapping`)
+- `args` (optional): Arguments for the subcommand (e.g., repository name for `show_repo`)
+- `options` (optional): Additional mod options (e.g., `["--base_module"]` for `graph`, `["--extension_filter"]` for `show_extension`)
+
+**Example - Show module dependency graph:**
+```json
+{
+  "name": "bazel_mod",
+  "arguments": {
+    "subcommand": "graph"
+  }
+}
+```
+
+**Example - Show specific repository:**
+```json
+{
+  "name": "bazel_mod",
+  "arguments": {
+    "subcommand": "show_repo",
+    "args": ["rules_go"]
+  }
+}
+```
+
+**Example - Show extension usage:**
+```json
+{
+  "name": "bazel_mod",
+  "arguments": {
+    "subcommand": "show_extension",
+    "args": ["@rules_go//go:extensions.bzl%go_sdk"]
+  }
+}
+```
+
 ## Requirements
 
 - Go 1.21 or later (for building from source)
@@ -255,6 +297,13 @@ Result: "Tests passed!\n\n//pkg:test PASSED"
 Tool: bazel_query
 Arguments: {"expression": "deps(//cmd/app:main)", "options": ["--output=label"]}
 Result: "//cmd/app:main\n//pkg/lib:library\n//external:go_sdk"
+```
+
+**Viewing module graph:**
+```
+Tool: bazel_mod
+Arguments: {"subcommand": "graph"}
+Result: "<root> (my_project@1.0.0)\n  ├─ rules_go@0.50.0\n  └─ gazelle@0.40.0"
 ```
 
 ## Contributing

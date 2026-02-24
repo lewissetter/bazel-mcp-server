@@ -5,7 +5,7 @@
 // The bazel-mcp-server provides MCP tools for interacting with Bazel build system.
 //
 // It runs over the stdio transport and provides tools for common Bazel commands:
-// build, test, clean, run, query, and aquery.
+// build, test, clean, run, query, aquery, info, and mod.
 package main
 
 import (
@@ -65,6 +65,11 @@ func main() {
 		Description: "Display runtime info about the Bazel server",
 	}, bazelInfo)
 
+	mcp.AddTool(server, &mcp.Tool{
+		Name:        "bazel_mod",
+		Description: "Manage Bazel modules (bzlmod) - query module graph, show repositories, and inspect extensions",
+	}, bazelMod)
+
 	// Run the server over stdio
 	if err := server.Run(context.Background(), &mcp.StdioTransport{}); err != nil {
 		log.Printf("Server failed: %v", err)
@@ -115,6 +120,13 @@ type AqueryArgs struct {
 type InfoArgs struct {
 	Keys    []string `json:"keys,omitempty" jsonschema:"specific info keys to retrieve (e.g. bazel-bin bazel-genfiles execution_root)"`
 	Options []string `json:"options,omitempty" jsonschema:"additional info options"`
+}
+
+// ModArgs represents arguments for bazel mod command
+type ModArgs struct {
+	Subcommand string   `json:"subcommand" jsonschema:"mod subcommand to run (graph, show_repo, show_extension, dump_repo_mapping)"`
+	Args       []string `json:"args,omitempty" jsonschema:"arguments for the subcommand (e.g. repository name for show_repo)"`
+	Options    []string `json:"options,omitempty" jsonschema:"additional mod options (e.g. --base_module for graph, --extension_filter for show_extension)"`
 }
 
 // bazelBuild builds one or more targets
@@ -291,6 +303,46 @@ func bazelInfo(ctx context.Context, req *mcp.CallToolRequest, args InfoArgs) (*m
 	if err != nil {
 		return &mcp.CallToolResult{
 			Content: []mcp.Content{&mcp.TextContent{Text: fmt.Sprintf("Info failed: %v\n\nOutput:\n%s", err, output)}},
+			IsError: true,
+		}, nil, nil
+	}
+
+	return &mcp.CallToolResult{
+		Content: []mcp.Content{&mcp.TextContent{Text: output}},
+	}, nil, nil
+}
+
+// bazelMod manages Bazel modules (bzlmod)
+func bazelMod(ctx context.Context, req *mcp.CallToolRequest, args ModArgs) (*mcp.CallToolResult, any, error) {
+	if args.Subcommand == "" {
+		return &mcp.CallToolResult{
+			Content: []mcp.Content{&mcp.TextContent{Text: "Error: subcommand is required (graph, show_repo, show_extension, dump_repo_mapping)"}},
+			IsError: true,
+		}, nil, nil
+	}
+
+	// Validate subcommand
+	validSubcommands := map[string]bool{
+		"graph":             true,
+		"show_repo":         true,
+		"show_extension":    true,
+		"dump_repo_mapping": true,
+	}
+	if !validSubcommands[args.Subcommand] {
+		return &mcp.CallToolResult{
+			Content: []mcp.Content{&mcp.TextContent{Text: fmt.Sprintf("Error: invalid subcommand '%s'. Valid options: graph, show_repo, show_extension, dump_repo_mapping", args.Subcommand)}},
+			IsError: true,
+		}, nil, nil
+	}
+
+	cmdArgs := []string{"mod", args.Subcommand}
+	cmdArgs = append(cmdArgs, args.Options...)
+	cmdArgs = append(cmdArgs, args.Args...)
+
+	output, err := executeBazel(ctx, cmdArgs)
+	if err != nil {
+		return &mcp.CallToolResult{
+			Content: []mcp.Content{&mcp.TextContent{Text: fmt.Sprintf("Mod command failed: %v\n\nOutput:\n%s", err, output)}},
 			IsError: true,
 		}, nil, nil
 	}
